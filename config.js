@@ -1,3 +1,10 @@
+// Load mobile debug console on every page
+(function() {
+    const script = document.createElement('script');
+    script.src = '/mobile-console.js';
+    document.head.appendChild(script);
+})();
+
 // Supabase Configuration
 const SUPABASE_URL = 'https://xfswosnhewblxdtvtbcz.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhmc3dvc25oZXdibHhkdHZ0YmN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNDg5NjEsImV4cCI6MjA4MDcyNDk2MX0.xghqZwlpxQ6Gu0nz98wVUOOtz-Hqiw5NPNJ0mAE9TLc';
