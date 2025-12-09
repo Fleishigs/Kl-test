@@ -126,33 +126,65 @@ function changeImage(index) {
 }
 
 async function checkout() {
-    if (!product || !stripe) return;
+    if (!product || !stripe) {
+        console.error('Missing product or stripe:', { product: !!product, stripe: !!stripe });
+        alert('Checkout not ready. Please refresh the page.');
+        return;
+    }
     
     try {
+        console.log('Starting checkout for product:', product.id);
+        
         // Get current user if logged in
         const { data: { user } } = await supabase.auth.getUser();
+        console.log('User logged in:', !!user);
+        
+        const checkoutData = { 
+            productId: product.id,
+            productName: product.name,
+            productPrice: product.price,
+            productImage: product.images && product.images.length > 0 ? product.images[0] : product.image_url,
+            userId: user ? user.id : null
+        };
+        
+        console.log('Sending checkout data:', checkoutData);
         
         const response = await fetch('/.netlify/functions/create-checkout', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                productId: product.id,
-                productName: product.name,
-                productPrice: product.price,
-                productImage: product.images && product.images.length > 0 ? product.images[0] : product.image_url,
-                userId: user ? user.id : null
-            })
+            body: JSON.stringify(checkoutData)
         });
 
-        const data = await response.json();
+        console.log('Response status:', response.status);
+        console.log('Response OK:', response.ok);
         
-        if (data.error) throw new Error(data.error);
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Response not OK. Status:', response.status, 'Body:', errorText);
+            throw new Error(`Server error: ${response.status} - ${errorText}`);
+        }
 
+        const data = await response.json();
+        console.log('Response data:', data);
+        
+        if (data.error) {
+            console.error('Data contains error:', data.error);
+            throw new Error(data.error);
+        }
+        
+        if (!data.sessionId) {
+            console.error('No sessionId in response:', data);
+            throw new Error('No session ID returned from server');
+        }
+
+        console.log('Redirecting to checkout with sessionId:', data.sessionId);
         await stripe.redirectToCheckout({ sessionId: data.sessionId });
         
     } catch (error) {
         console.error('Checkout error:', error);
-        alert('Error processing checkout. Please contact us.');
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        alert('Error processing checkout. Check console for details.');
     }
 }
 
