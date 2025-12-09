@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - KosherLynk</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <svg viewBox="0 0 40 40" class="logo-icon">
+                    <rect x="8" y="5" width="24" height="30" rx="4" fill="currentColor"/>
+                    <rect x="12" y="9" width="16" height="18" rx="2" fill="white"/>
+                    <circle cx="20" cy="31" r="2" fill="white"/>
+                </svg>
+                <span>KosherLynk</span>
+            </a>
+            <div class="nav-links">
+                <a href="/products">Products</a>
+                <a href="/contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <h1>My Account</h1>
+            </div>
+        </section>
+
+        <section class="account-section">
+            <div class="container">
+                <div class="account-grid">
+                    <!-- Profile Card -->
+                    <div class="account-card">
+                        <div class="account-card-header">
+                            <h2>Profile Information</h2>
+                        </div>
+                        <div class="account-card-body">
+                            <div class="profile-field">
+                                <label>Full Name</label>
+                                <div class="profile-value" id="user-name">Loading...</div>
+                            </div>
+                            <div class="profile-field">
+                                <label>Email</label>
+                                <div class="profile-value" id="user-email">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order History Card -->
+                    <div class="account-card account-card-wide">
+                        <div class="account-card-header">
+                            <h2>Order History</h2>
+                        </div>
+                        <div class="account-card-body">
+                            <div id="orders-container">
+                                <div class="loading-state">
+                                    <div class="spinner"></div>
+                                    <p>Loading your orders...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <svg viewBox="0 0 40 40" class="logo-icon">
+                            <rect x="8" y="5" width="24" height="30" rx="4" fill="currentColor"/>
+                            <rect x="12" y="9" width="16" height="18" rx="2" fill="white"/>
+                            <circle cx="20" cy="31" r="2" fill="white"/>
+                        </svg>
+                        <span>KosherLynk</span>
+                    </div>
+                    <p>Simple phones for intentional living</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 KosherLynk. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="account.js"></script>
+</body>
+</html>
